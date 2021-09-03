@@ -154,6 +154,11 @@ _A model adapted from iron-request element of Google Polymer._
         const auth = this.auth;
         let body;
 
+
+
+        if (action == 'set-label') {
+          body = '{"action": "set-label", "label": "'+ options.label +'"}';
+        }
         if (action == 'mkdir') {
           body = '{"action": "mkdir", "name": "'+ options.name +'"}';
         } else if (action == 'mv') {
@@ -199,6 +204,30 @@ _A model adapted from iron-request element of Google Polymer._
         xhr.send(body);
         
         return this.promise;
+      }
+
+      /*
+       * ### Performs a request to add a new label to a  file.
+       *  @param {{
+       *   options: (object)}} options -
+       *     `url`: (String) The url with the dcache restful-api path
+       *    `path`: (String) The full path to where of a file
+       *     `label`: (String) Label valued.
+       *  */
+
+      setlabel(options) {
+        try {
+          precondition.checkArgument(options.path != undefined || options.label != null,
+
+                  "Please provide the value of the label.");
+          let opt = {};
+          opt.url = this._appendFullPathToUrl(options.url, options.path);
+          opt.label = options.label;
+          this._send(opt, "set-label");
+        } catch (e) {
+          this.rejectPromise(new Error("Could not proceed with the request. " + e.message));
+        }
+
       }
 
       /*
