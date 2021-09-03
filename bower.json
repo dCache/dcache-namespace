@@ -1,6 +1,6 @@
 {
   "name": "dcache-namespace",
-
+  "version": "1.0.0",
   "description": "An element for dcache-view and which main purpose is to make an ajax call to dcache.",
   "main": "dcache-namespace.html",
   "dependencies": {
